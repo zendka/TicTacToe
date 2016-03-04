@@ -19,6 +19,6 @@ class Game
 
     public function getConfig()
     {
-        return $this->grid->getGrid();
+        return $this->grid->getConfig();
     }
 }

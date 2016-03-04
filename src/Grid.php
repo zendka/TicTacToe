@@ -61,7 +61,8 @@ class Grid
         $this->playersPositions[2] = array_keys($config, 'O');
     }
 
-    public function getGrid()
+    // @todo Find a better name
+    public function getConfig()
     {
         // @todo const EMPTY_GRID
         $grid = [null, null, null, null, null, null, null, null, null];
