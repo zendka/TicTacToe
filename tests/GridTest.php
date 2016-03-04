@@ -2,8 +2,16 @@
 
 class GridTest extends \PHPUnit_Framework_TestCase
 {
-    public function test()
+    public function testAvailablePositions()
     {
-        $this->assertTrue(true);
+        $config = [
+          'O' , null, 'X',
+          'X' , 'O' , 'X',
+          null, null, null
+        ];
+        $grid = new Grid($config);
+
+        $availablePositions = $grid->availablePositions();
+        $this->assertTrue(sort($availablePositions) == [1, 6, 7, 8]);
     }
 }

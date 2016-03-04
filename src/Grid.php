@@ -60,4 +60,10 @@ class Grid
         $this->playersPositions[1] = array_keys($config, 'X');
         $this->playersPositions[2] = array_keys($config, 'O');
     }
+
+    public function availablePositions()
+    {
+        $occupiedPositions = array_merge($this->playersPositions[1], $this->playersPositions[2]);
+        return array_diff(Grid::POSITIONS, $occupiedPositions);
+    }
 }
