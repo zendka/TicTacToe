@@ -16,4 +16,9 @@ class Game
         $this->grid = $grid;
         $this->type = $type;
     }
+
+    public function getConfig()
+    {
+        return $this->grid->getGrid();
+    }
 }
