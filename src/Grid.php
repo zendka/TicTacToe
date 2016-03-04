@@ -91,4 +91,14 @@ class Grid
     {
         return count($this->playersPositions[$player]);
     }
+
+    public function hasThreeInLine($player) {
+        foreach (Grid::LINES as $line) {
+            $positionsOnThisLine = array_intersect($this->playersPositions[$player], $line);
+            if (count($positionsOnThisLine) == 3) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

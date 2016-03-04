@@ -57,4 +57,28 @@ class GridTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(3, $grid->countPositions(1));
     }
+
+    public function testHasThreeInLine()
+    {
+        $config = [
+          'O' , null, 'X',
+          'X' , 'O' , 'X',
+          null, null, 'O'
+        ];
+        $grid = new Grid($config);
+
+        $this->AssertTrue($grid->hasThreeInLine(2));
+    }
+
+    public function testHasThreeInLineNot()
+    {
+        $config = [
+          'O' , null, 'X',
+          'X' , 'O' , 'X',
+          null, null, 'O'
+        ];
+        $grid = new Grid($config);
+
+        $this->AssertFalse($grid->hasThreeInLine(1));
+    }
 }
