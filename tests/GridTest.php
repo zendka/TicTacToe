@@ -12,7 +12,8 @@ class GridTest extends \PHPUnit_Framework_TestCase
         $grid = new Grid($config);
 
         $availablePositions = $grid->getAvailablePositions();
-        $this->assertTrue(sort($availablePositions) == [1, 6, 7, 8]);
+        sort($availablePositions);
+        $this->assertEquals([1, 6, 7, 8], $availablePositions);
     }
 
     public function testGetGrid()
