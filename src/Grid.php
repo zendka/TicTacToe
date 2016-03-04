@@ -87,6 +87,11 @@ class Grid
         array_push($this->playersPositions[$player], $position);
     }
 
+    public function cancelLastMark($player)
+    {
+        array_pop($this->playersPositions[$player]);
+    }
+
     public function countPositions($player)
     {
         return count($this->playersPositions[$player]);

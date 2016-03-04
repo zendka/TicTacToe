@@ -81,4 +81,22 @@ class GridTest extends \PHPUnit_Framework_TestCase
 
         $this->AssertFalse($grid->hasThreeInLine(1));
     }
+
+    public function testCancelLastMark()
+    {
+        $config = [
+          'O' , null, 'X',
+          'X' , 'O' , 'X',
+          null, null, 'O'
+        ];
+        $grid = new Grid($config);
+        $grid->cancelLastMark(1);
+
+        $expectedConfig = [
+          'O' , null, 'X',
+          'X' , 'O' , null,
+          null, null, 'O'
+        ];
+        $this->AssertEquals($expectedConfig, $grid->getConfig());
+    }
 }
