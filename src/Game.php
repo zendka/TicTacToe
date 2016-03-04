@@ -21,4 +21,43 @@ class Game
     {
         return $this->grid->getConfig();
     }
+
+    public function playTurn()
+    {
+        if (!$this->isComputersTurn()) {
+            return;
+        }
+
+        $currentPlayer = $this->getCurrentPlayer();
+        $bestPosition = $this->getBestMove($currentPlayer);
+
+        $this->grid->markPosition($currentPlayer, $bestPosition);
+    }
+
+    private function isComputersTurn()
+    {
+        return $this->type == self::COMPUTER_VS_COMPUTER ||
+               $this->type == self::COMPUTER_VS_HUMAN && $this->isFirstPlayersTurn() ||
+               $this->type == self::HUMAN_VS_COMPUTER && $this->isSecondPlayersTurn();
+    }
+
+    private function isFirstPlayersTurn()
+    {
+        return $this->grid->countPositions(1) == $this->grid->countPositions(2);
+    }
+
+    private function isSecondPlayersTurn()
+    {
+        return !$this->isFirstPlayersTurn();
+    }
+
+    private function getCurrentPlayer()
+    {
+        return $this->isFirstPlayersTurn() ? 1 : 2;
+    }
+
+    private function getBestMove($player)
+    {
+        return 1;
+    }
 }
