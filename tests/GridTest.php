@@ -26,4 +26,22 @@ class GridTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($config, $grid->getGrid());
     }
+
+    public function testMarkPosition()
+    {
+        $config = [
+          'O' , null, 'X',
+          'X' , 'O' , 'X',
+          null, null, null
+        ];
+        $grid = new Grid($config);
+        $grid->markPosition(2, 8);
+
+        $expectedConfig = [
+          'O' , null, 'X',
+          'X' , 'O' , 'X',
+          null, null, 'O'
+        ];
+        $this->assertEquals($expectedConfig, $grid->getGrid());
+    }
 }

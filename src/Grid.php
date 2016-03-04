@@ -80,4 +80,9 @@ class Grid
         $occupiedPositions = array_merge($this->playersPositions[1], $this->playersPositions[2]);
         return array_diff(Grid::POSITIONS, $occupiedPositions);
     }
+
+    public function markPosition($player, $position)
+    {
+        array_push($this->playersPositions[$player], $position);
+    }
 }
