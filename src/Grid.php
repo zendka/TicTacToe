@@ -75,7 +75,7 @@ class Grid
         return $grid;
     }
 
-    public function availablePositions()
+    public function getAvailablePositions()
     {
         $occupiedPositions = array_merge($this->playersPositions[1], $this->playersPositions[2]);
         return array_diff(Grid::POSITIONS, $occupiedPositions);
