@@ -14,7 +14,7 @@ class GameTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($config, $game->getConfig());
     }
 
-    public function testPlayTurn()
+    public function testWin()
     {
         $config = [
           'O' , null, 'X',
@@ -25,11 +25,10 @@ class GameTest extends \PHPUnit_Framework_TestCase
         $game->playTurn();
 
         $expectedConfig = [
-          'O' , 'O' , 'X',
+          'O' , null , 'X',
           'X' , 'O' , 'X',
-          null, null, null
+          null, null, 'O'
         ];
-
         $this->assertEquals($expectedConfig, $game->getConfig());
     }
 }

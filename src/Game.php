@@ -56,8 +56,32 @@ class Game
         return $this->isFirstPlayersTurn() ? 1 : 2;
     }
 
+    private static function random(array $positions)
+    {
+        return $positions[array_rand($positions)];
+    }
+
+    // Use Newell and Simon's algorithm: https://en.wikipedia.org/wiki/Tic-tac-toe
     private function getBestMove($player)
     {
-        return 1;
+        if ($winningPositions = $this->getWinningPositions($player)) {
+            $bestMoves = $winningPositions;
+        }
+        return self::random($bestMoves);
+    }
+
+    private function getWinningPositions($player)
+    {
+        return array_filter($this->grid->getAvailablePositions(), function($position) use ($player){
+            $this->grid->markPosition($player, $position);
+            $isWinningPosition = $this->isWinner($player);
+            $this->grid->cancelLastMark($player);
+            return $isWinningPosition;
+        });
+    }
+
+    private function isWinner($player)
+    {
+        return $this->grid->hasThreeInLine($player);
     }
 }
