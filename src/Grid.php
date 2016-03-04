@@ -55,14 +55,13 @@ class Grid
     private $playersPositions = [];
 
     // @todo Validate input
-    public function __construct(array $config)
+    public function __construct(array $state)
     {
-        $this->playersPositions[1] = array_keys($config, 'X');
-        $this->playersPositions[2] = array_keys($config, 'O');
+        $this->playersPositions[1] = array_keys($state, 'X');
+        $this->playersPositions[2] = array_keys($state, 'O');
     }
 
-    // @todo Find a better name
-    public function getConfig()
+    public function getState()
     {
         // @todo const EMPTY_GRID
         $grid = [null, null, null, null, null, null, null, null, null];

@@ -17,9 +17,9 @@ class Game
         $this->type = $type;
     }
 
-    public function getConfig()
+    public function getState()
     {
-        return $this->grid->getConfig();
+        return $this->grid->getState();
     }
 
     public function playTurn()

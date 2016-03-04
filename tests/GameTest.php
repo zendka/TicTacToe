@@ -2,33 +2,33 @@
 
 class GameTest extends \PHPUnit_Framework_TestCase
 {
-    public function testGetConfig()
+    public function testGetState()
     {
-        $config = [
+        $state = [
           'O' , null, 'X',
           'X' , 'O' , 'X',
           null, null, null
         ];
-        $game = new Game(new Grid($config));
+        $game = new Game(new Grid($state));
 
-        $this->assertEquals($config, $game->getConfig());
+        $this->assertEquals($state, $game->getState());
     }
 
     public function testWin()
     {
-        $config = [
+        $state = [
           'O' , null, 'X',
           'X' , 'O' , 'X',
           null, null, null
         ];
-        $game = new Game(new Grid($config));
+        $game = new Game(new Grid($state));
         $game->playTurn();
 
-        $expectedConfig = [
-          'O' , null , 'X',
+        $expectedState = [
+          'O' , null, 'X',
           'X' , 'O' , 'X',
           null, null, 'O'
         ];
-        $this->assertEquals($expectedConfig, $game->getConfig());
+        $this->assertEquals($expectedState, $game->getState());
     }
 }

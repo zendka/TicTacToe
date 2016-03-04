@@ -25,7 +25,7 @@ class GridTest extends \PHPUnit_Framework_TestCase
         ];
         $grid = new Grid($config);
 
-        $this->assertEquals($config, $grid->getConfig());
+        $this->assertEquals($config, $grid->getState());
     }
 
     public function testMarkPosition()
@@ -43,7 +43,7 @@ class GridTest extends \PHPUnit_Framework_TestCase
           'X' , 'O' , 'X',
           null, null, 'O'
         ];
-        $this->assertEquals($expectedConfig, $grid->getConfig());
+        $this->assertEquals($expectedConfig, $grid->getState());
     }
 
     public function testCountPositions()
@@ -97,6 +97,6 @@ class GridTest extends \PHPUnit_Framework_TestCase
           'X' , 'O' , null,
           null, null, 'O'
         ];
-        $this->AssertEquals($expectedConfig, $grid->getConfig());
+        $this->AssertEquals($expectedConfig, $grid->getState());
     }
 }
