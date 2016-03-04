@@ -61,6 +61,20 @@ class Grid
         $this->playersPositions[2] = array_keys($config, 'O');
     }
 
+    public function getGrid()
+    {
+        // @todo const EMPTY_GRID
+        $grid = [null, null, null, null, null, null, null, null, null];
+
+        foreach ($this->playersPositions[1] as $position) {
+            $grid[$position] = 'X';
+        }
+        foreach ($this->playersPositions[2] as $position) {
+            $grid[$position] = 'O';
+        }
+        return $grid;
+    }
+
     public function availablePositions()
     {
         $occupiedPositions = array_merge($this->playersPositions[1], $this->playersPositions[2]);
