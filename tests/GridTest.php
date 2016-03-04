@@ -44,4 +44,16 @@ class GridTest extends \PHPUnit_Framework_TestCase
         ];
         $this->assertEquals($expectedConfig, $grid->getGrid());
     }
+
+    public function testCountPositions()
+    {
+        $config = [
+          'O' , null, 'X',
+          'X' , 'O' , 'X',
+          null, null, null
+        ];
+        $grid = new Grid($config);
+
+        $this->assertEquals(3, $grid->countPositions(1));
+    }
 }

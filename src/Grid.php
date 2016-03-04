@@ -85,4 +85,9 @@ class Grid
     {
         array_push($this->playersPositions[$player], $position);
     }
+
+    public function countPositions($player)
+    {
+        return count($this->playersPositions[$player]);
+    }
 }
