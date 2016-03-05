@@ -45,15 +45,15 @@ class Grid
     public function getState()
     {
         // @todo const EMPTY_GRID
-        $grid = [null, null, null, null, null, null, null, null, null];
+        $state = [null, null, null, null, null, null, null, null, null];
 
         foreach ($this->playersPositions[1] as $position) {
-            $grid[$position] = 'X';
+            $state[$position] = 'X';
         }
         foreach ($this->playersPositions[2] as $position) {
-            $grid[$position] = 'O';
+            $state[$position] = 'O';
         }
-        return $grid;
+        return $state;
     }
 
     public function getAvailablePositions()
