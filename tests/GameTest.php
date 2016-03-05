@@ -120,4 +120,82 @@ class GameTest extends \PHPUnit_Framework_TestCase
         ];
         $this->assertTrue(in_array($game->getState(), $expectedStates));
     }
+
+    public function testComputerPlaysTheCenter()
+    {
+        $state = [
+          'X' , null, null,
+          null, null, null,
+          null, null, null
+        ];
+        $game = new Game(new Grid($state));
+        $game->playTurn();
+
+        $expectedState = [
+          'X' , null, null,
+          null, 'O' , null,
+          null, null, null
+        ];
+        $this->assertEquals($expectedState, $game->getState());
+    }
+
+    public function testComputerPlaysACorner()
+    {
+        $state = [
+          null, null, null,
+          'X' , 'O' , 'X',
+          null, null, null
+        ];
+        $game = new Game(new Grid($state));
+        $game->playTurn();
+
+        $expectedStates = [
+          [
+            'O' , null, null,
+            'X' , 'O' , 'X',
+            null, null, null
+          ],
+          [
+            null, null, 'O',
+            'X' , 'O' , 'X',
+            null, null, null
+          ],
+          [
+            null, null, null,
+            'X' , 'O' , 'X',
+            null, null, 'O'
+          ],
+          [
+            null, null, null,
+            'X' , 'O' , 'X',
+            'O' , null, null
+          ]
+        ];
+        $this->assertTrue(in_array($game->getState(), $expectedStates));
+    }
+
+    public function testComputerPlaysASide()
+    {
+        $state = [
+          'X' , 'O' , 'X',
+          null, 'X' , null,
+          'O' , 'X' , 'O'
+        ];
+        $game = new Game(new Grid($state));
+        $game->playTurn();
+
+        $expectedStates = [
+          [
+            'X' , 'O' , 'X',
+            null, 'X' , 'O',
+            'O' , 'X' , 'O'
+          ],
+          [
+            'X' , 'O' , 'X',
+            'O' , 'X' , null,
+            'O' , 'X' , 'O'
+          ]
+        ];
+        $this->assertTrue(in_array($game->getState(), $expectedStates));
+    }
 }

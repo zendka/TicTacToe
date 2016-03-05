@@ -81,6 +81,12 @@ class Game
                 $forceOpponentPositions = $this->getForceOpponentPositions($player, $opponentsForkPositions);
                 $bestMoves = $forceOpponentPositions;
             }
+        } elseif ($availableCentralPosition = array_intersect($this->grid->getAvailablePositions(), Grid::CENTER)) {
+            $bestMoves = $availableCentralPosition;
+        } elseif ($availableCornerPositions = array_intersect($this->grid->getAvailablePositions(), Grid::CORNERS)) {
+            $bestMoves = $availableCornerPositions;
+        } else {
+            $bestMoves = $this->grid->getAvailablePositions();
         }
 
         return self::random($bestMoves);
