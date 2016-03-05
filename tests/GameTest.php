@@ -31,4 +31,22 @@ class GameTest extends \PHPUnit_Framework_TestCase
         ];
         $this->assertEquals($expectedState, $game->getState());
     }
+
+    public function testBlocksOpponent()
+    {
+        $state = [
+          'X' , null, 'X',
+          'O' , null, null,
+          null, 'X' , 'O'
+        ];
+        $game = new Game(new Grid($state));
+        $game->playTurn();
+
+        $expectedState = [
+          'X' , 'O' , 'X',
+          'O' , null, null,
+          null, 'X' , 'O'
+        ];
+        $this->assertEquals($expectedState, $game->getState());
+    }
 }

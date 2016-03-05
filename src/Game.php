@@ -64,8 +64,13 @@ class Game
     // Use Newell and Simon's algorithm: https://en.wikipedia.org/wiki/Tic-tac-toe
     private function getBestMove($player)
     {
+        $opponent = $player == 1 ? 2 : 1;
+
         if ($winningPositions = $this->getWinningPositions($player)) {
             $bestMoves = $winningPositions;
+        } elseif ($opponentsWinningPositions = $this->getWinningPositions($opponent)) {
+            // Block opponent by marking its winning position
+            $bestMoves = $opponentsWinningPositions;
         }
         return self::random($bestMoves);
     }
