@@ -67,4 +67,57 @@ class GameTest extends \PHPUnit_Framework_TestCase
         ];
         $this->assertEquals($expectedState, $game->getState());
     }
+
+    public function testComputerBlocksOpponentsFork()
+    {
+        $state = [
+          'X' , null, 'O',
+          'O' , null, 'X',
+          'X' , null, null
+        ];
+        $game = new Game(new Grid($state));
+        $game->playTurn();
+
+        $expectedState = [
+          'X' , null, 'O',
+          'O' , null, 'X',
+          'X' , null, 'O'
+        ];
+        $this->assertEquals($expectedState, $game->getState());
+    }
+
+    public function testComputerBlocksOpponentsMultipleForks()
+    {
+        $state = [
+          'X' , null, null,
+          null, 'O' , null,
+          null, null, 'X'
+        ];
+        $game = new Game(new Grid($state));
+        $game->playTurn();
+
+        $expectedStates = [
+          [
+            'X' , 'O' , null,
+            null, 'O' , null,
+            null, null, 'X'
+          ],
+          [
+            'X' , null, null,
+            'O' , 'O' , null,
+            null, null, 'X'
+          ],
+          [
+            'X' , null, null,
+            null, 'O' , 'O' ,
+            null, null, 'X'
+          ],
+          [
+            'X' , null, null,
+            null, 'O' , null,
+            null, 'O' , 'X'
+          ]
+        ];
+        $this->assertTrue(in_array($game->getState(), $expectedStates));
+    }
 }

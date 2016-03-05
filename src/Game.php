@@ -73,7 +73,16 @@ class Game
             $bestMoves = $opponentsWinningPositions;
         } elseif ($forkPositions = $this->getForkPositions($player)) {
             $bestMoves = $forkPositions;
+        } elseif ($opponentsForkPositions = $this->getForkPositions($opponent)) {
+            $canBlockOpponent = sizeof($opponentsForkPositions) == 1;
+            if ($canBlockOpponent) {
+                $bestMoves = $opponentsForkPositions;
+            } else {
+                $forceOpponentPositions = $this->getForceOpponentPositions($player, $opponentsForkPositions);
+                $bestMoves = $forceOpponentPositions;
+            }
         }
+
         return self::random($bestMoves);
     }
 
@@ -105,6 +114,25 @@ class Game
             $isForkPosition = count($this->getWinningPositions($player)) >= 2;
             $this->grid->cancelLastMark($player);
             return $isForkPosition;
+        });
+    }
+
+    /**
+     * Get the "force opponent" positions
+     *
+     * A "force opponent" position is one that creates a future winning position
+     * The opponent will be forced to block this position in order not to lose.
+     * Make sure that the position to be blocked by the opponent is not a winning one for him.
+     */
+    private function getForceOpponentPositions($player, $opponentsForkPositions)
+    {
+        return array_filter($this->grid->getAvailablePositions(), function($position) use ($player, $opponentsForkPositions) {
+            $this->grid->markPosition($player, $position);
+            $winningPositions = $this->getWinningPositions($player);
+            $isForceOpponentPosition = !empty($winningPositions) &&
+                                       !array_intersect($winningPositions, $opponentsForkPositions);
+            $this->grid->cancelLastMark($player);
+            return $isForceOpponentPosition;
         });
     }
 }
