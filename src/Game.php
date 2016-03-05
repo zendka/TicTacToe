@@ -71,6 +71,8 @@ class Game
         } elseif ($opponentsWinningPositions = $this->getWinningPositions($opponent)) {
             // Block opponent by marking its winning position
             $bestMoves = $opponentsWinningPositions;
+        } elseif ($forkPositions = $this->getForkPositions($player)) {
+            $bestMoves = $forkPositions;
         }
         return self::random($bestMoves);
     }
@@ -88,5 +90,21 @@ class Game
     private function isWinner($player)
     {
         return $this->grid->hasThreeInLine($player);
+    }
+
+    /**
+     * Gets fork positions for player
+     *
+     * A fork position is an unmarked position that if marked creates two future winning positions.
+     * The opponent can only block one. So this is a future win.
+     */
+    private function getForkPositions($player)
+    {
+        return array_filter($this->grid->getAvailablePositions(), function($position) use ($player) {
+            $this->grid->markPosition($player, $position);
+            $isForkPosition = count($this->getWinningPositions($player)) >= 2;
+            $this->grid->cancelLastMark($player);
+            return $isForkPosition;
+        });
     }
 }
