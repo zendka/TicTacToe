@@ -94,12 +94,14 @@ class Game
 
     private function getWinningPositions($player)
     {
-        return array_filter($this->grid->getAvailablePositions(), function($position) use ($player){
-            $this->grid->markPosition($player, $position);
-            $isWinningPosition = $this->isWinner($player);
-            $this->grid->cancelLastMark($player);
-            return $isWinningPosition;
-        });
+        return array_filter($this->grid->getAvailablePositions(),
+          function ($position) use ($player) {
+              $this->grid->markPosition($player, $position);
+              $isWinningPosition = $this->isWinner($player);
+              $this->grid->cancelLastMark($player);
+              return $isWinningPosition;
+          }
+        );
     }
 
     private function isWinner($player)
@@ -115,12 +117,15 @@ class Game
      */
     private function getForkPositions($player)
     {
-        return array_filter($this->grid->getAvailablePositions(), function($position) use ($player) {
-            $this->grid->markPosition($player, $position);
-            $isForkPosition = count($this->getWinningPositions($player)) >= 2;
-            $this->grid->cancelLastMark($player);
-            return $isForkPosition;
-        });
+        return array_filter($this->grid->getAvailablePositions(),
+          function ($position) use ($player) {
+              $this->grid->markPosition($player, $position);
+              $isForkPosition = count($this->getWinningPositions($player)) >= 2;
+              $this->grid->cancelLastMark($player);
+
+              return $isForkPosition;
+          }
+        );
     }
 
     /**
@@ -132,13 +137,16 @@ class Game
      */
     private function getForceOpponentPositions($player, $opponentsForkPositions)
     {
-        return array_filter($this->grid->getAvailablePositions(), function($position) use ($player, $opponentsForkPositions) {
-            $this->grid->markPosition($player, $position);
-            $winningPositions = $this->getWinningPositions($player);
-            $isForceOpponentPosition = !empty($winningPositions) &&
-                                       !array_intersect($winningPositions, $opponentsForkPositions);
-            $this->grid->cancelLastMark($player);
-            return $isForceOpponentPosition;
-        });
+        return array_filter($this->grid->getAvailablePositions(),
+          function ($position) use ($player, $opponentsForkPositions) {
+              $this->grid->markPosition($player, $position);
+              $winningPositions = $this->getWinningPositions($player);
+              $isForceOpponentPosition = !empty($winningPositions) &&
+                                         !array_intersect($winningPositions, $opponentsForkPositions);
+              $this->grid->cancelLastMark($player);
+
+              return $isForceOpponentPosition;
+          }
+        );
     }
 }

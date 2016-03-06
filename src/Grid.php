@@ -44,8 +44,11 @@ class Grid
 
     public function getState()
     {
-        // @todo const EMPTY_GRID
-        $state = [null, null, null, null, null, null, null, null, null];
+        $state = [
+          null, null, null,
+          null, null, null,
+          null, null, null
+        ];
 
         foreach ($this->playersPositions[1] as $position) {
             $state[$position] = 'X';
@@ -78,8 +81,8 @@ class Grid
     }
 
     public function hasThreeInLine($player) {
-        $lines = array_merge(array_merge(self::ROWS, self::COLUMNS), self::DIAGONALS);
-        
+        $lines = array_merge(self::ROWS, self::COLUMNS, self::DIAGONALS);
+
         foreach ($lines as $line) {
             $positionsOnThisLine = array_intersect($this->playersPositions[$player], $line);
             if (count($positionsOnThisLine) == 3) {
