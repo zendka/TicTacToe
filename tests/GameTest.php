@@ -14,6 +14,19 @@ class GameTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($state, $game->getState());
     }
 
+    public function testOnlyPlaysItsTurn()
+    {
+        $state = [
+          'O' , null, 'X',
+          'X' , 'O' , 'X',
+          null, null, null
+        ];
+        $game = new Game(new Grid($state), Game::HUMAN_VS_HUMAN);
+        $game->playTurn();
+
+        $this->assertEquals($state, $game->getState());
+    }
+
     public function testWin()
     {
         $state = [
