@@ -223,4 +223,41 @@ class GameTest extends \PHPUnit_Framework_TestCase
         ];
         $this->assertTrue(in_array($game->getState(), $expectedStates));
     }
+
+    public function testIsOver()
+    {
+        $state = [
+          'O' , null, 'O',
+          'X' , 'X' , 'X',
+          null, null, null
+        ];
+        $game = new Game(new Grid($state), Game::HUMAN_VS_HUMAN);
+
+        $this->assertTrue($game->isOver());
+    }
+
+    public function testIsNotOver()
+    {
+        $state = [
+          'O' , null, 'X',
+          'X' , 'O' , 'X',
+          null, null, null
+        ];
+        $game = new Game(new Grid($state), Game::HUMAN_VS_HUMAN);
+
+        $this->assertFalse($game->isOver());
+    }
+
+
+    public function testGetWinner()
+    {
+        $state = [
+          'O' , null, 'O',
+          'X' , 'X' , 'X',
+          null, null, null
+        ];
+        $game = new Game(new Grid($state), Game::HUMAN_VS_HUMAN);
+
+        $this->assertEquals(1, $game->getWinner());
+    }
 }

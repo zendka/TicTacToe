@@ -154,4 +154,14 @@ class Game
           }
         );
     }
+
+    public function isOver()
+    {
+        return $this->getWinner() || empty($this->grid->getAvailablePositions()) ? true : false;
+    }
+
+    public function getWinner()
+    {
+        return $this->isWinner(1) ? 1 : ($this->isWinner(2) ? 2 : false);
+    }
 }
