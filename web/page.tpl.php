@@ -18,6 +18,10 @@
 <body>
     <h1>Tic-tac-toe</h1>
 
+    <?php if(isset($message)): ?>
+        <p class="message"><?php print $message; ?></p>
+    <?php endif; ?>
+
     <?php outputGridTemplate($game); ?>
 
     <?php outputGameTypeTemplate(); ?>

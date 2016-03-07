@@ -19,6 +19,14 @@ function outputPageTemplate(Game $game)
     $computerVsComputer = $game->getType() == Game::COMPUTER_VS_COMPUTER;
     $gameOver = $game->isOver();
     $currentPlayer = $game->isFirstPlayersTurn() == 1 ? 'X' : 'O';
+    $winner = $game->getWinner();
+    if ($gameOver) {
+        $message = !$winner ?
+          'It is a draw' :
+          ($game->getType() == Game::HUMAN_VS_HUMAN ?
+            "Player $winner won" :
+            'Computer won');
+    }
 
     include('page.tpl.php');
 }
