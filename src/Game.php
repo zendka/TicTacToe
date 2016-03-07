@@ -46,7 +46,7 @@ class Game
                $this->type == self::HUMAN_VS_COMPUTER && $this->isSecondPlayersTurn();
     }
 
-    private function isFirstPlayersTurn()
+    public function isFirstPlayersTurn()
     {
         return $this->grid->countPositions(1) == $this->grid->countPositions(2);
     }

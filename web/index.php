@@ -24,5 +24,6 @@ $available = [];
 foreach ($state as $position => $mark) {
     $available[$position] = !$mark && !$game->isOver() && $game->getType() != Game::COMPUTER_VS_COMPUTER;
 }
+$currentPlayer = $game->isFirstPlayersTurn() == 1 ? 'X' : '0';
 
 include('page.tpl.php');

@@ -4,7 +4,13 @@
 <head>
     <meta charset="utf-8">
     <title>Tic-tac-toe</title>
+
     <link rel="stylesheet" href="style.css">
+
+    <script>
+        currentPlayer = "<?php print $currentPlayer; ?>";
+    </script>
+    <script src="script.js"></script>
 </head>
 
 <body>
