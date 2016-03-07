@@ -1,0 +1,63 @@
+/* Background */
+html {
+    height: 100%;
+}
+body {
+    margin: 0;
+    background: #E6E1DC;
+    background: -moz-linear-gradient(top,
+    rgba(0, 0, 255, .4) 0%,
+    rgba(255, 0, 255, .4) 50%,
+    rgba(255, 0, 0, .4) 100%
+    );
+    background: -webkit-gradient(linear, left top, left bottom,
+    color-stop(0%, rgba(0, 0, 255, .4)),
+    color-stop(50%, rgba(255, 0, 255, .4)),
+    color-stop(100%, rgba(255, 0, 0, .4))
+    );
+}
+
+/* General styling */
+body {
+    text-align: center;
+    font-size: 19px;
+}
+h1 {
+    font-size: 40px;
+}
+
+/* Colors */
+h1 {
+    color: darkslateblue;
+}
+input {
+    color: lightpink;
+}
+input[readonly] {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Grid */
+form {
+    margin: 0 auto;
+    width: 160px;
+    overflow: hidden;
+}
+input {
+    display: block;
+    float: left;
+    margin:0;
+    border: 3px solid darkslateblue;
+    padding: 5px 10px;
+    font-size: 30px;
+    width: 25px;
+}
+input:nth-child(3n+1) {
+    clear: both;
+}
+input:hover {
+    cursor: pointer !important;
+}
+input[type="submit"] {
+    display: none;
+}

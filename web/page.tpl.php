@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Tic-tac-toe</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
