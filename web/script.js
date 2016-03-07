@@ -1,3 +1,13 @@
+function autoSubmitIfComputersPlay() {
+    if (computerVsComputer && !gameOver) {
+        var forms = document.getElementsByTagName('form');
+        var form = forms[0];
+        setTimeout(function() {
+            form.submit();
+        }, 1000);
+    }
+}
+
 function submitOnUserClick() {
     var inputs = document.getElementsByTagName('input');
     for (var i=inputs.length; i--;) {
@@ -15,5 +25,6 @@ function submitOnUserClick() {
 }
 
 window.onload = function() {
+    autoSubmitIfComputersPlay();
     submitOnUserClick()
 };

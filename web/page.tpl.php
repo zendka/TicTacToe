@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="style.css">
 
     <script>
+        computerVsComputer = "<?php print $computerVsComputer; ?>";
+        gameOver = "<?php print $gameOver; ?>";
         currentPlayer = "<?php print $currentPlayer; ?>";
     </script>
     <script src="script.js"></script>

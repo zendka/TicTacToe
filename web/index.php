@@ -23,6 +23,8 @@ $available = [];
 foreach ($state as $position => $mark) {
     $available[$position] = !$mark && !$game->isOver() && $game->getType() != Game::COMPUTER_VS_COMPUTER;
 }
+$computerVsComputer = $game->getType() == Game::COMPUTER_VS_COMPUTER;
+$gameOver = $game->isOver();
 $currentPlayer = $game->isFirstPlayersTurn() == 1 ? 'X' : 'O';
 
 include('page.tpl.php');
