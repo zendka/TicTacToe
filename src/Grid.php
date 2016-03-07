@@ -46,7 +46,7 @@ class Grid
     private $playersPositions = [];
 
     // @todo Validate input
-    public function __construct(array $state)
+    public function __construct($state = self::INITIAL_STATE)
     {
         $this->playersPositions[1] = array_keys($state, 'X');
         $this->playersPositions[2] = array_keys($state, 'O');

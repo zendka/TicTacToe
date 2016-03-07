@@ -12,12 +12,10 @@ $types = [
   Game::COMPUTER_VS_COMPUTER => "Watch the computer play by itself",
 ];
 
-$config = [
-  'O' , null, 'X',
-  'X' , 'O' , 'X',
-  null, null, null
-];
-$game = new Game(new Grid($config));
+$state = isset($_GET['state']) ? $_GET['state'] : Grid::INITIAL_STATE;
+$type = isset($_GET['type']) ? $_GET['type'] : Game::HUMAN_VS_COMPUTER;
+
+$game = new Game(new Grid($state), $type);
 
 $state = $game->getState();
 $available = [];

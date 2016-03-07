@@ -3,5 +3,6 @@
         <input type="text" size="1" name="state[<?php print $position; ?>]"
                value="<?php print $state[$position]; ?>" <?php if (!$available[$position]) print 'readonly'; ?>>
     <?php endforeach; ?>
+    <input type="hidden" name="type" value="<?php print $type; ?>">
     <input type="Submit" value="Submit">
 </form>
