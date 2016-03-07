@@ -9,6 +9,8 @@
 <body>
     <h1>Tic-tac-toe</h1>
 
+    <?php include('grid.tpl.php'); ?>
+
     <?php include('type.tpl.php'); ?>
 </body>
 </html>
