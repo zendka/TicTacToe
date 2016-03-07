@@ -8,5 +8,7 @@
 
 <body>
     <h1>Tic-tac-toe</h1>
+
+    <?php include('type.tpl.php'); ?>
 </body>
 </html>
