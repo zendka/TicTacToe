@@ -16,6 +16,7 @@ $state = isset($_GET['state']) ? $_GET['state'] : Grid::INITIAL_STATE;
 $type = isset($_GET['type']) ? $_GET['type'] : Game::HUMAN_VS_COMPUTER;
 
 $game = new Game(new Grid($state), $type);
+$game->playTurn();
 
 $state = $game->getState();
 $available = [];

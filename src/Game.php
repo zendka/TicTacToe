@@ -29,7 +29,7 @@ class Game
 
     public function playTurn()
     {
-        if (!$this->isComputersTurn()) {
+        if ($this->isOver() || !$this->isComputersTurn()) {
             return;
         }
 
