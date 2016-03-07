@@ -12,7 +12,17 @@
  */
 class Grid
 {
-    const POSITIONS = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    const INITIAL_STATE = [
+        null, null, null,
+        null, null, null,
+        null, null, null,
+    ];
+
+    const POSITIONS = [
+      0, 1, 2,
+      3, 4, 5,
+      6, 7, 8
+    ];
 
     const CORNERS   = [0, 2, 6, 8];
     const SIDES     = [1, 3, 5, 7];
@@ -44,11 +54,7 @@ class Grid
 
     public function getState()
     {
-        $state = [
-          null, null, null,
-          null, null, null,
-          null, null, null
-        ];
+        $state = self::INITIAL_STATE;
 
         foreach ($this->playersPositions[1] as $position) {
             $state[$position] = 'X';
