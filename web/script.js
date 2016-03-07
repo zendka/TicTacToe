@@ -1,4 +1,4 @@
-function autoSubmitIfComputersPlay() {
+function autoSubmitIfComputerVsComputer() {
     if (computerVsComputer && !gameOver) {
         var forms = document.getElementsByTagName('form');
         var form = forms[0];
@@ -8,7 +8,7 @@ function autoSubmitIfComputersPlay() {
     }
 }
 
-function submitOnUserClick() {
+function autoSubmitOnUserClick() {
     var inputs = document.getElementsByTagName('input');
     for (var i=inputs.length; i--;) {
         if (inputs[i].getAttribute('type') == 'text' && !inputs[i].readOnly) {
@@ -25,6 +25,6 @@ function submitOnUserClick() {
 }
 
 window.onload = function() {
-    autoSubmitIfComputersPlay();
-    submitOnUserClick()
+    autoSubmitIfComputerVsComputer();
+    autoSubmitOnUserClick()
 };
