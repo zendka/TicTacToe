@@ -18,8 +18,8 @@
 <body>
     <h1>Tic-tac-toe</h1>
 
-    <?php include('grid.tpl.php'); ?>
+    <?php outputGridTemplate($game); ?>
 
-    <?php include('type.tpl.php'); ?>
+    <?php outputGameTypeTemplate(); ?>
 </body>
 </html>
