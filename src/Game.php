@@ -22,6 +22,11 @@ class Game
         return $this->grid->getState();
     }
 
+    public function getType()
+    {
+        return $this->type;
+    }
+
     public function playTurn()
     {
         if (!$this->isComputersTurn()) {
