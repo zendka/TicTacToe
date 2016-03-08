@@ -71,6 +71,16 @@ class Grid
         return array_diff(Grid::POSITIONS, $occupiedPositions);
     }
 
+    public function getAvailableCentralPosition()
+    {
+        return array_intersect($this->getAvailablePositions(), Grid::CENTER);
+    }
+
+    public function getAvailableCornerPositions()
+    {
+        return array_intersect($this->getAvailablePositions(), Grid::CORNERS);
+    }
+
     public function markPosition($player, $position)
     {
         array_push($this->playersPositions[$player], $position);

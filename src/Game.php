@@ -46,7 +46,7 @@ class Game
 
     public function isOver()
     {
-        return $this->getWinner() || empty($this->grid->getAvailablePositions()) ? true : false;
+        return $this->getWinner() || empty($this->grid->getAvailablePositions());
     }
 
     private function isComputersTurn()

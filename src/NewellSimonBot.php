@@ -17,7 +17,7 @@ class NewellSimonBot
 
     public function getBestMove($player)
     {
-        $opponent = $player == 1 ? 2 : 1;
+        $opponent = self::getOpponent($player);
 
         if ($winningPositions = $this->getWinningPositions($player)) {
             $bestMoves = $winningPositions;
@@ -34,9 +34,9 @@ class NewellSimonBot
                 $forceOpponentPositions = $this->getForceOpponentPositions($player, $opponentsForkPositions);
                 $bestMoves = $forceOpponentPositions;
             }
-        } elseif ($availableCentralPosition = array_intersect($this->game->grid->getAvailablePositions(), Grid::CENTER)) {
+        } elseif ($availableCentralPosition = $this->game->grid->getAvailableCentralPosition()) {
             $bestMoves = $availableCentralPosition;
-        } elseif ($availableCornerPositions = array_intersect($this->game->grid->getAvailablePositions(), Grid::CORNERS)) {
+        } elseif ($availableCornerPositions = $this->game->grid->getAvailableCornerPositions()) {
             $bestMoves = $availableCornerPositions;
         } else {
             $bestMoves = $this->game->grid->getAvailablePositions();
@@ -101,5 +101,10 @@ class NewellSimonBot
     private static function random(array $positions)
     {
         return $positions[array_rand($positions)];
+    }
+
+    private static function getOpponent($player)
+    {
+        return $player == 1 ? 2 : 1;
     }
 }
