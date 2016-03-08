@@ -5,54 +5,51 @@ require_once dirname(__DIR__) . '/src/autoload.php';
 use Florin\TicTacToe\Game as Game;
 use Florin\TicTacToe\Grid as Grid;
 
-
-function processInput()
+function getInput()
 {
-    $state = isset($_GET['state']) ? $_GET['state'] : Grid::INITIAL_STATE;
-    $type  = isset($_GET['type']) ? $_GET['type'] : Game::HUMAN_VS_COMPUTER;
-    return [$state, $type];
+    $gameType  = isset($_GET['gameType']) ? $_GET['gameType'] : Game::HUMAN_VS_COMPUTER;
+    $gridState = isset($_GET['gridState']) ? $_GET['gridState'] : Grid::INITIAL_STATE;
+    return [$gameType, $gridState];
 }
 
-function outputPageTemplate(Game $game)
+function displayPage(Game $game)
 {
     // Initialise variables to be used in the template
-    $computerVsComputer = $game->getType() == Game::COMPUTER_VS_COMPUTER;
-    $gameOver = $game->isOver();
+    $isComputerVsComputer = $game->getType() == Game::COMPUTER_VS_COMPUTER;
+    $isGameOver = $game->isOver();
     $currentPlayer = $game->isFirstPlayersTurn() == 1 ? 'X' : 'O';
     $winner = $game->getWinner();
-    if ($gameOver) {
+    if ($isGameOver) {
         $message = !$winner ?
           'It is a draw' :
-          ($game->getType() == Game::HUMAN_VS_HUMAN ?
-            "Player $winner won" :
-            'Computer won');
+          ($game->getType() == Game::HUMAN_VS_HUMAN ? "Player $winner won" : 'Computer won');
     }
 
     include('page.tpl.php');
 }
 
-function outputGridTemplate(Game $game)
+function displayGrid(Game $game)
 {
     // Initialise variables to be used in the template
-    $type = $game->getType();
-    $state = $game->getState();
+    $gameType = $game->getType();
+    $gridState = $game->getState();
     $available = [];
-    foreach ($state as $position => $mark) {
+    foreach ($gridState as $position => $mark) {
         $available[$position] = !$mark && !$game->isOver() && $game->getType() != Game::COMPUTER_VS_COMPUTER;
     }
 
     include('grid.tpl.php');
 }
 
-function outputGameTypeTemplate()
+function displayGameType()
 {
     // Initialise variables to be used in the template
-    $types = [
+    $gameTypes = [
       Game::HUMAN_VS_COMPUTER => "Play against computer - you first",
       Game::COMPUTER_VS_HUMAN => "Play against computer - computer first",
       Game::HUMAN_VS_HUMAN => "Play by yourself",
       Game::COMPUTER_VS_COMPUTER => "Watch the computer play by itself",
     ];
 
-    include('type.tpl.php');
+    include('game-type.tpl.php');
 }

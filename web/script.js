@@ -1,5 +1,5 @@
 function autoSubmitIfComputerVsComputer() {
-    if (computerVsComputer && !gameOver) {
+    if (isComputerVsComputer && !isGameOver) {
         var forms = document.getElementsByTagName('form');
         var form = forms[0];
         setTimeout(function() {

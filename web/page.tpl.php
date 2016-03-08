@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="style.css">
 
     <script>
-        computerVsComputer = "<?php print $computerVsComputer; ?>";
-        gameOver = "<?php print $gameOver; ?>";
+        isComputerVsComputer = "<?php print $isComputerVsComputer; ?>";
+        isGameOver = "<?php print $isGameOver; ?>";
         currentPlayer = "<?php print $currentPlayer; ?>";
     </script>
     <script src="script.js"></script>
@@ -22,8 +22,8 @@
         <p class="message"><?php print $message; ?></p>
     <?php endif; ?>
 
-    <?php outputGridTemplate($game); ?>
+    <?php displayGrid($game); ?>
 
-    <?php outputGameTypeTemplate(); ?>
+    <?php displayGameType(); ?>
 </body>
 </html>
