@@ -29,30 +29,14 @@ class Game
         return $this->type;
     }
 
-    public function playTurn()
-    {
-        if ($this->isOver() || !$this->isComputersTurn()) {
-            return;
-        }
-
-        $currentPlayer = $this->getCurrentPlayer();
-
-        $bot = new NewellSimonBot($this);
-        $bestPosition = $bot->getBestMove($currentPlayer);
-
-        $this->grid->markPosition($currentPlayer, $bestPosition);
-    }
-
-    private function isComputersTurn()
-    {
-        return $this->type == self::COMPUTER_VS_COMPUTER ||
-               $this->type == self::COMPUTER_VS_HUMAN && $this->getCurrentPlayer() == 1 ||
-               $this->type == self::HUMAN_VS_COMPUTER && $this->getCurrentPlayer() == 2;
-    }
-
     public function getCurrentPlayer()
     {
         return $this->grid->countPositions(1) == $this->grid->countPositions(2) ? 1 : 2;
+    }
+
+    public function getWinner()
+    {
+        return $this->isWinner(1) ? 1 : ($this->isWinner(2) ? 2 : false);
     }
 
     public function isWinner($player)
@@ -65,8 +49,24 @@ class Game
         return $this->getWinner() || empty($this->grid->getAvailablePositions()) ? true : false;
     }
 
-    public function getWinner()
+    private function isComputersTurn()
     {
-        return $this->isWinner(1) ? 1 : ($this->isWinner(2) ? 2 : false);
+        return $this->type == self::COMPUTER_VS_COMPUTER ||
+               $this->type == self::COMPUTER_VS_HUMAN && $this->getCurrentPlayer() == 1 ||
+               $this->type == self::HUMAN_VS_COMPUTER && $this->getCurrentPlayer() == 2;
+    }
+
+    public function playTurn()
+    {
+        if ($this->isOver() || !$this->isComputersTurn()) {
+            return;
+        }
+
+        $currentPlayer = $this->getCurrentPlayer();
+
+        $bot = new NewellSimonBot($this);
+        $bestPosition = $bot->getBestMove($currentPlayer);
+
+        $this->grid->markPosition($currentPlayer, $bestPosition);
     }
 }
