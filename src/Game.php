@@ -46,23 +46,13 @@ class Game
     private function isComputersTurn()
     {
         return $this->type == self::COMPUTER_VS_COMPUTER ||
-               $this->type == self::COMPUTER_VS_HUMAN && $this->isFirstPlayersTurn() ||
-               $this->type == self::HUMAN_VS_COMPUTER && $this->isSecondPlayersTurn();
+               $this->type == self::COMPUTER_VS_HUMAN && $this->getCurrentPlayer() == 1 ||
+               $this->type == self::HUMAN_VS_COMPUTER && $this->getCurrentPlayer() == 2;
     }
 
-    public function isFirstPlayersTurn()
+    public function getCurrentPlayer()
     {
-        return $this->grid->countPositions(1) == $this->grid->countPositions(2);
-    }
-
-    private function isSecondPlayersTurn()
-    {
-        return !$this->isFirstPlayersTurn();
-    }
-
-    private function getCurrentPlayer()
-    {
-        return $this->isFirstPlayersTurn() ? 1 : 2;
+        return $this->grid->countPositions(1) == $this->grid->countPositions(2) ? 1 : 2;
     }
 
     public function isWinner($player)

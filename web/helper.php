@@ -17,7 +17,7 @@ function displayPage(Game $game)
     // Initialise variables to be used in the template
     $isComputerVsComputer = $game->getType() == Game::COMPUTER_VS_COMPUTER;
     $isGameOver = $game->isOver();
-    $currentPlayer = $game->isFirstPlayersTurn() == 1 ? 'X' : 'O';
+    $currentPlayer = $game->getCurrentPlayer() == 1 ? 'X' : 'O';
     $winner = $game->getWinner();
     if ($isGameOver) {
         $message = !$winner ?
