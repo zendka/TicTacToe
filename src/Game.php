@@ -12,7 +12,7 @@ class Game
     private $bot;
 
     // @todo Validate input
-    public function __construct(Grid $grid, $type = self::HUMAN_VS_COMPUTER, $bot = 'NewellSimonBot')
+    public function __construct(Grid $grid, $type = self::HUMAN_VS_COMPUTER, $bot = 'Florin\TicTacToe\NewellSimonBot')
     {
         $this->grid = $grid;
         $this->type = $type;
@@ -64,7 +64,7 @@ class Game
 
         $currentPlayer = $this->getCurrentPlayer();
 
-        $bot = new NewellSimonBot($this);
+        $bot = new $this->bot($this);
         $bestPosition = $bot->getBestMove($currentPlayer);
 
         $this->grid->markPosition($currentPlayer, $bestPosition);
