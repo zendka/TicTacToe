@@ -9,17 +9,31 @@ class Game
     const HUMAN_VS_HUMAN       = 3;
     const COMPUTER_VS_COMPUTER = 4;
 
+    static $types = [
+      self::HUMAN_VS_COMPUTER,
+      self::COMPUTER_VS_HUMAN,
+      self::HUMAN_VS_HUMAN,
+      self::COMPUTER_VS_COMPUTER,
+    ];
+
     private $type = self::HUMAN_VS_COMPUTER;
-    // @todo make private and make it array instead of Grid!! I don't need to know about the representation!!!
-    public $grid;
+    private $grid;
     private $bot;
 
-    // @todo Validate input
     public function __construct(Grid $grid, $type = self::HUMAN_VS_COMPUTER, $bot = 'Florin\TicTacToe\NewellSimonBot')
     {
+        if (!$this->isTypeValid($type)) {
+            throw new \InvalidArgumentException('Wrong argument. $type not known.');
+        }
         $this->grid = $grid;
         $this->type = $type;
+        // @todo Validate $bot. Test class exists and implements interface with method getBestMove()?
         $this->bot = $bot;
+    }
+
+    private function isTypeValid($type)
+    {
+        return in_array($type, self::$types);
     }
 
     public function getGrid()

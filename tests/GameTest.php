@@ -2,7 +2,18 @@
 
 class GameTest extends \PHPUnit_Framework_TestCase
 {
-    public function testGetState()
+    public function testArgumentException()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $grid = [
+          'O' , null, 'X',
+          'X' , 'O' , 'X',
+          null, null, null
+        ];
+        $game = new Game(new Grid($grid), 22);
+    }
+
+    public function testGetGrid()
     {
         $grid = [
           'O' , null, 'X',
