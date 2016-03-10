@@ -1,30 +1,30 @@
+window.onload = function() {
+    emptyInputs = document.querySelectorAll('input[type=text]:not([readonly])');
+    forms = document.getElementsByTagName('form');
+    form = forms[0];
+
+    autoSubmitIfComputerVsComputer();
+    submitOnUserClick()
+};
+
 function autoSubmitIfComputerVsComputer() {
     if (isComputerVsComputer && !isGameOver) {
-        var forms = document.getElementsByTagName('form');
-        var form = forms[0];
         setTimeout(function() {
             form.submit();
-        }, 1000);
+        }, 600);
     }
 }
 
-function autoSubmitOnUserClick() {
-    var inputs = document.getElementsByTagName('input');
-    for (var i=inputs.length; i--;) {
-        if (inputs[i].getAttribute('type') == 'text' && !inputs[i].readOnly) {
-            inputs[i].onfocus = function() {
-                this.readOnly = true;
-                this.value = currentPlayer;
-                var form = this.parentElement;
-                setTimeout(function() {
-                    form.submit();
-                }, 500);
-            }
-        }
+function submitOnUserClick() {
+    for (var i=emptyInputs.length; i--;) {
+        emptyInputs[i].onfocus = markAndSubmit;
     }
 }
 
-window.onload = function() {
-    autoSubmitIfComputerVsComputer();
-    autoSubmitOnUserClick()
-};
+function markAndSubmit() {
+    this.readOnly = true;
+    this.value = currentPlayersMark;
+    setTimeout(function() {
+        form.submit();
+    }, 250);
+}
