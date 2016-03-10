@@ -51,7 +51,7 @@ class NewellSimonBot
     {
         return array_filter($this->grid->getEmptyPositions(),
           function ($position) use ($player) {
-              $this->grid->markPosition(Game::$PLAYERS_MARKS[$player], $position);
+              $this->grid->markPosition($this->playersMarks[$player], $position);
               $isWinningPosition = $this->isWinner($player);
               $this->grid->removeMark($position);
               return $isWinningPosition;
@@ -69,7 +69,7 @@ class NewellSimonBot
     {
         return array_filter($this->grid->getEmptyPositions(),
           function ($position) use ($player) {
-              $this->grid->markPosition(Game::$PLAYERS_MARKS[$player], $position);
+              $this->grid->markPosition($this->playersMarks[$player], $position);
               $isForkPosition = count($this->getWinningPositions($player)) >= 2;
               $this->grid->removeMark($position);
 
@@ -89,7 +89,7 @@ class NewellSimonBot
     {
         return array_filter($this->grid->getEmptyPositions(),
           function ($position) use ($player, $opponentsForkPositions) {
-              $this->grid->markPosition(Game::$PLAYERS_MARKS[$player], $position);
+              $this->grid->markPosition($this->playersMarks[$player], $position);
               $winningPositions = $this->getWinningPositions($player);
               $isForceOpponentPosition = !empty($winningPositions) &&
                                          !array_intersect($winningPositions, $opponentsForkPositions);

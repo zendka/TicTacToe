@@ -2,7 +2,7 @@
 
 class Game
 {
-    static $PLAYERS_MARKS = [
+    const PLAYERS_MARKS = [
       1 => 'X',
       2 => 'O',
     ];
@@ -51,8 +51,8 @@ class Game
 
     public function getCurrentPlayer()
     {
-        return $this->grid->countPositions(self::$PLAYERS_MARKS[1]) ==
-            $this->grid->countPositions(self::$PLAYERS_MARKS[2]) ?
+        return $this->grid->countPositions(self::PLAYERS_MARKS[1]) ==
+            $this->grid->countPositions(self::PLAYERS_MARKS[2]) ?
             1 : 2;
     }
 
@@ -71,15 +71,15 @@ class Game
 
         $currentPlayer = $this->getCurrentPlayer();
 
-        $bot = new $this->bot($this->grid, self::$PLAYERS_MARKS);
+        $bot = new $this->bot($this->grid, self::PLAYERS_MARKS);
         $bestPosition = $bot->getBestMove($currentPlayer);
 
-        $this->grid->markPosition(self::$PLAYERS_MARKS[$currentPlayer], $bestPosition);
+        $this->grid->markPosition(self::PLAYERS_MARKS[$currentPlayer], $bestPosition);
     }
 
     private function isWinner($player)
     {
-        return $this->grid->hasThreeInLine(self::$PLAYERS_MARKS[$player]);
+        return $this->grid->hasThreeInLine(self::PLAYERS_MARKS[$player]);
     }
 
     public function isOver()
