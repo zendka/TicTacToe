@@ -13,8 +13,6 @@ class GridTest extends \PHPUnit_Framework_TestCase
           null,
         ];
         $grid = new Grid($config);
-
-        $this->assertEquals($config, $grid->getGrid());
     }
 
     public function testArgumentExceptionWithUnsuitableType()

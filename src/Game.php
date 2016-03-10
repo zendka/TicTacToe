@@ -2,7 +2,10 @@
 
 class Game
 {
-    static public $PLAYERS_MARKS = [1 => 'X', 2 => 'O'];
+    static $PLAYERS_MARKS = [
+      1 => 'X',
+      2 => 'O',
+    ];
 
     const HUMAN_VS_COMPUTER    = 1;
     const COMPUTER_VS_HUMAN    = 2;
@@ -53,21 +56,6 @@ class Game
             1 : 2;
     }
 
-    public function getWinner()
-    {
-        return $this->isWinner(1) ? 1 : ($this->isWinner(2) ? 2 : false);
-    }
-
-    public function isWinner($player)
-    {
-        return $this->grid->hasThreeInLine(self::$PLAYERS_MARKS[$player]);
-    }
-
-    public function isOver()
-    {
-        return $this->getWinner() || empty($this->grid->getEmptyPositions());
-    }
-
     private function isComputersTurn()
     {
         return $this->type == self::COMPUTER_VS_COMPUTER ||
@@ -87,5 +75,20 @@ class Game
         $bestPosition = $bot->getBestMove($currentPlayer);
 
         $this->grid->markPosition(self::$PLAYERS_MARKS[$currentPlayer], $bestPosition);
+    }
+
+    private function isWinner($player)
+    {
+        return $this->grid->hasThreeInLine(self::$PLAYERS_MARKS[$player]);
+    }
+
+    public function isOver()
+    {
+        return $this->getWinner() || empty($this->grid->getEmptyPositions());
+    }
+
+    public function getWinner()
+    {
+        return $this->isWinner(1) ? 1 : ($this->isWinner(2) ? 2 : false);
     }
 }
