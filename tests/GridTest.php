@@ -2,21 +2,35 @@
 
 class GridTest extends \PHPUnit_Framework_TestCase
 {
-    public function testAvailablePositions()
+
+    public function testArgumentExceptionWithTooManyValues()
     {
+        $this->setExpectedException('InvalidArgumentException');
         $config = [
           'O' , null, 'X',
           'X' , 'O' , 'X',
-          null, null, null
+          null, null, null,
+          null,
         ];
         $grid = new Grid($config);
 
-        $availablePositions = $grid->getAvailablePositions();
-        sort($availablePositions);
-        $this->assertEquals([1, 6, 7, 8], $availablePositions);
+        $this->assertEquals($config, $grid->getGrid());
     }
 
-    public function testGetConfig()
+    public function testArgumentExceptionWithUnsuitableType()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $config = [
+          'O' , null, 'X',
+          'X' , 'O' , 'X',
+          null, null, [1],
+        ];
+        $grid = new Grid($config);
+
+        $this->assertEquals($config, $grid->getGrid());
+    }
+
+    public function testGetGrid()
     {
         $config = [
           'O' , null, 'X',
@@ -25,7 +39,7 @@ class GridTest extends \PHPUnit_Framework_TestCase
         ];
         $grid = new Grid($config);
 
-        $this->assertEquals($config, $grid->getState());
+        $this->assertEquals($config, $grid->getGrid());
     }
 
     public function testMarkPosition()
@@ -36,14 +50,72 @@ class GridTest extends \PHPUnit_Framework_TestCase
           null, null, null
         ];
         $grid = new Grid($config);
-        $grid->markPosition(2, 8);
+        $grid->markPosition('O', 8);
 
         $expectedConfig = [
           'O' , null, 'X',
           'X' , 'O' , 'X',
           null, null, 'O'
         ];
-        $this->assertEquals($expectedConfig, $grid->getState());
+        $this->assertEquals($expectedConfig, $grid->getGrid());
+    }
+
+    public function testRemoveMark()
+    {
+        $config = [
+          'O' , null, 'X',
+          'X' , 'O' , 'X',
+          null, null, 'O'
+        ];
+        $grid = new Grid($config);
+        $grid->removeMark(5);
+
+        $expectedConfig = [
+          'O' , null, 'X',
+          'X' , 'O' , null,
+          null, null, 'O'
+        ];
+        $this->AssertEquals($expectedConfig, $grid->getGrid());
+    }
+
+    public function testGetEmptyPositions()
+    {
+        $config = [
+          'O' , null, 'X',
+          'X' , 'O' , 'X',
+          null, null, null
+        ];
+        $grid = new Grid($config);
+
+        $emptyPositions = $grid->getEmptyPositions();
+        sort($emptyPositions);
+        $this->assertEquals([1, 6, 7, 8], $emptyPositions);
+    }
+
+    public function testGetEmptyCentralPosition()
+    {
+        $config = [
+          'O' , null, 'X',
+          'X' , 'O' , 'X',
+          null, null, null
+        ];
+        $grid = new Grid($config);
+
+        $this->assertEquals([], $grid->getEmptyCentralPosition());
+    }
+
+    public function testGetEmptyCornerPositions()
+    {
+        $config = [
+          'O' , null, 'X',
+          'X' , 'O' , 'X',
+          null, null, null
+        ];
+        $grid = new Grid($config);
+
+        $emptyCornerPositions = $grid->getEmptyCornerPositions();
+        sort($emptyCornerPositions);
+        $this->assertEquals([6, 8], $emptyCornerPositions);
     }
 
     public function testCountPositions()
@@ -55,7 +127,7 @@ class GridTest extends \PHPUnit_Framework_TestCase
         ];
         $grid = new Grid($config);
 
-        $this->assertEquals(3, $grid->countPositions(1));
+        $this->assertEquals(3, $grid->countPositions('X'));
     }
 
     public function testHasThreeInLine()
@@ -67,7 +139,7 @@ class GridTest extends \PHPUnit_Framework_TestCase
         ];
         $grid = new Grid($config);
 
-        $this->AssertTrue($grid->hasThreeInLine(2));
+        $this->AssertTrue($grid->hasThreeInLine('O'));
     }
 
     public function testHasThreeInLineNot()
@@ -80,23 +152,5 @@ class GridTest extends \PHPUnit_Framework_TestCase
         $grid = new Grid($config);
 
         $this->AssertFalse($grid->hasThreeInLine(1));
-    }
-
-    public function testCancelLastMark()
-    {
-        $config = [
-          'O' , null, 'X',
-          'X' , 'O' , 'X',
-          null, null, 'O'
-        ];
-        $grid = new Grid($config);
-        $grid->cancelLastMark(1);
-
-        $expectedConfig = [
-          'O' , null, 'X',
-          'X' , 'O' , null,
-          null, null, 'O'
-        ];
-        $this->AssertEquals($expectedConfig, $grid->getState());
     }
 }

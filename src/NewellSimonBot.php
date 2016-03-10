@@ -34,12 +34,12 @@ class NewellSimonBot
                 $forceOpponentPositions = $this->getForceOpponentPositions($player, $opponentsForkPositions);
                 $bestMoves = $forceOpponentPositions;
             }
-        } elseif ($availableCentralPosition = $this->game->grid->getAvailableCentralPosition()) {
+        } elseif ($availableCentralPosition = $this->game->grid->getEmptyCentralPosition()) {
             $bestMoves = $availableCentralPosition;
-        } elseif ($availableCornerPositions = $this->game->grid->getAvailableCornerPositions()) {
+        } elseif ($availableCornerPositions = $this->game->grid->getEmptyCornerPositions()) {
             $bestMoves = $availableCornerPositions;
         } else {
-            $bestMoves = $this->game->grid->getAvailablePositions();
+            $bestMoves = $this->game->grid->getEmptyPositions();
         }
 
         return self::random($bestMoves);
@@ -47,11 +47,11 @@ class NewellSimonBot
 
     private function getWinningPositions($player)
     {
-        return array_filter($this->game->grid->getAvailablePositions(),
+        return array_filter($this->game->grid->getEmptyPositions(),
           function ($position) use ($player) {
-              $this->game->grid->markPosition($player, $position);
+              $this->game->grid->markPosition(Game::$PLAYERS_MARKS[$player], $position);
               $isWinningPosition = $this->game->isWinner($player);
-              $this->game->grid->cancelLastMark($player);
+              $this->game->grid->removeMark($position);
               return $isWinningPosition;
           }
         );
@@ -65,11 +65,11 @@ class NewellSimonBot
      */
     private function getForkPositions($player)
     {
-        return array_filter($this->game->grid->getAvailablePositions(),
+        return array_filter($this->game->grid->getEmptyPositions(),
           function ($position) use ($player) {
-              $this->game->grid->markPosition($player, $position);
+              $this->game->grid->markPosition(Game::$PLAYERS_MARKS[$player], $position);
               $isForkPosition = count($this->getWinningPositions($player)) >= 2;
-              $this->game->grid->cancelLastMark($player);
+              $this->game->grid->removeMark($position);
 
               return $isForkPosition;
           }
@@ -85,13 +85,13 @@ class NewellSimonBot
      */
     private function getForceOpponentPositions($player, $opponentsForkPositions)
     {
-        return array_filter($this->game->grid->getAvailablePositions(),
+        return array_filter($this->game->grid->getEmptyPositions(),
           function ($position) use ($player, $opponentsForkPositions) {
-              $this->game->grid->markPosition($player, $position);
+              $this->game->grid->markPosition(Game::$PLAYERS_MARKS[$player], $position);
               $winningPositions = $this->getWinningPositions($player);
               $isForceOpponentPosition = !empty($winningPositions) &&
                                          !array_intersect($winningPositions, $opponentsForkPositions);
-              $this->game->grid->cancelLastMark($player);
+              $this->game->grid->removeMark($position);
 
               return $isForceOpponentPosition;
           }

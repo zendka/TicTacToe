@@ -4,124 +4,124 @@ class GameTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetState()
     {
-        $state = [
+        $grid = [
           'O' , null, 'X',
           'X' , 'O' , 'X',
           null, null, null
         ];
-        $game = new Game(new Grid($state));
+        $game = new Game(new Grid($grid));
 
-        $this->assertEquals($state, $game->getState());
+        $this->assertEquals($grid, $game->getGrid());
     }
 
     public function testGetType()
     {
-        $state = [
+        $grid = [
           'O' , null, 'X',
           'X' , 'O' , 'X',
           null, null, null
         ];
-        $game = new Game(new Grid($state), Game::HUMAN_VS_HUMAN);
+        $game = new Game(new Grid($grid), Game::HUMAN_VS_HUMAN);
 
         $this->assertEquals(Game::HUMAN_VS_HUMAN, $game->getType());
     }
 
     public function testOnlyPlaysItsTurn()
     {
-        $state = [
+        $grid = [
           'O' , null, 'X',
           'X' , 'O' , 'X',
           null, null, null
         ];
-        $game = new Game(new Grid($state), Game::HUMAN_VS_HUMAN);
+        $game = new Game(new Grid($grid), Game::HUMAN_VS_HUMAN);
         $game->playTurn();
 
-        $this->assertEquals($state, $game->getState());
+        $this->assertEquals($grid, $game->getGrid());
     }
 
     public function testWin()
     {
-        $state = [
+        $grid = [
           'O' , null, 'X',
           'X' , 'O' , 'X',
           null, null, null
         ];
-        $game = new Game(new Grid($state));
+        $game = new Game(new Grid($grid));
         $game->playTurn();
 
-        $expectedState = [
+        $expectedGrid = [
           'O' , null, 'X',
           'X' , 'O' , 'X',
           null, null, 'O'
         ];
-        $this->assertEquals($expectedState, $game->getState());
+        $this->assertEquals($expectedGrid, $game->getGrid());
     }
 
     public function testBlocksOpponent()
     {
-        $state = [
+        $grid = [
           'X' , null, 'X',
           'O' , null, null,
           null, 'X' , 'O'
         ];
-        $game = new Game(new Grid($state));
+        $game = new Game(new Grid($grid));
         $game->playTurn();
 
-        $expectedState = [
+        $expectedGrid = [
           'X' , 'O' , 'X',
           'O' , null, null,
           null, 'X' , 'O'
         ];
-        $this->assertEquals($expectedState, $game->getState());
+        $this->assertEquals($expectedGrid, $game->getGrid());
     }
 
     public function testFork()
     {
-        $state = [
+        $grid = [
           'O' , 'X' , 'X',
           'X' , null, null,
           null, 'O' , null
         ];
-        $game = new Game(new Grid($state));
+        $game = new Game(new Grid($grid));
         $game->playTurn();
 
-        $expectedState = [
+        $expectedGrid = [
           'O' , 'X' , 'X',
           'X' , null, null,
           null, 'O' , 'O'
         ];
-        $this->assertEquals($expectedState, $game->getState());
+        $this->assertEquals($expectedGrid, $game->getGrid());
     }
 
     public function testComputerBlocksOpponentsFork()
     {
-        $state = [
+        $grid = [
           'X' , null, 'O',
           'O' , null, 'X',
           'X' , null, null
         ];
-        $game = new Game(new Grid($state));
+        $game = new Game(new Grid($grid));
         $game->playTurn();
 
-        $expectedState = [
+        $expectedGrid = [
           'X' , null, 'O',
           'O' , null, 'X',
           'X' , null, 'O'
         ];
-        $this->assertEquals($expectedState, $game->getState());
+        $this->assertEquals($expectedGrid, $game->getGrid());
     }
 
     public function testComputerBlocksOpponentsMultipleForks()
     {
-        $state = [
+        $grid = [
           'X' , null, null,
           null, 'O' , null,
           null, null, 'X'
         ];
-        $game = new Game(new Grid($state));
+        $game = new Game(new Grid($grid));
         $game->playTurn();
 
-        $expectedStates = [
+        $expectedGrids = [
           [
             'X' , 'O' , null,
             null, 'O' , null,
@@ -143,38 +143,38 @@ class GameTest extends \PHPUnit_Framework_TestCase
             null, 'O' , 'X'
           ]
         ];
-        $this->assertTrue(in_array($game->getState(), $expectedStates));
+        $this->assertTrue(in_array($game->getGrid(), $expectedGrids));
     }
 
     public function testComputerPlaysTheCenter()
     {
-        $state = [
+        $grid = [
           'X' , null, null,
           null, null, null,
           null, null, null
         ];
-        $game = new Game(new Grid($state));
+        $game = new Game(new Grid($grid));
         $game->playTurn();
 
-        $expectedState = [
+        $expectedGrid = [
           'X' , null, null,
           null, 'O' , null,
           null, null, null
         ];
-        $this->assertEquals($expectedState, $game->getState());
+        $this->assertEquals($expectedGrid, $game->getGrid());
     }
 
     public function testComputerPlaysACorner()
     {
-        $state = [
+        $grid = [
           null, null, null,
           'X' , 'O' , 'X',
           null, null, null
         ];
-        $game = new Game(new Grid($state));
+        $game = new Game(new Grid($grid));
         $game->playTurn();
 
-        $expectedStates = [
+        $expectedGrids = [
           [
             'O' , null, null,
             'X' , 'O' , 'X',
@@ -196,20 +196,20 @@ class GameTest extends \PHPUnit_Framework_TestCase
             'O' , null, null
           ]
         ];
-        $this->assertTrue(in_array($game->getState(), $expectedStates));
+        $this->assertTrue(in_array($game->getGrid(), $expectedGrids));
     }
 
     public function testComputerPlaysASide()
     {
-        $state = [
+        $grid = [
           'X' , 'O' , 'X',
           null, 'X' , null,
           'O' , 'X' , 'O'
         ];
-        $game = new Game(new Grid($state));
+        $game = new Game(new Grid($grid));
         $game->playTurn();
 
-        $expectedStates = [
+        $expectedGrids = [
           [
             'X' , 'O' , 'X',
             null, 'X' , 'O',
@@ -221,29 +221,29 @@ class GameTest extends \PHPUnit_Framework_TestCase
             'O' , 'X' , 'O'
           ]
         ];
-        $this->assertTrue(in_array($game->getState(), $expectedStates));
+        $this->assertTrue(in_array($game->getGrid(), $expectedGrids));
     }
 
     public function testIsOver()
     {
-        $state = [
+        $grid = [
           'O' , null, 'O',
           'X' , 'X' , 'X',
           null, null, null
         ];
-        $game = new Game(new Grid($state), Game::HUMAN_VS_HUMAN);
+        $game = new Game(new Grid($grid), Game::HUMAN_VS_HUMAN);
 
         $this->assertTrue($game->isOver());
     }
 
     public function testIsNotOver()
     {
-        $state = [
+        $grid = [
           'O' , null, 'X',
           'X' , 'O' , 'X',
           null, null, null
         ];
-        $game = new Game(new Grid($state), Game::HUMAN_VS_HUMAN);
+        $game = new Game(new Grid($grid), Game::HUMAN_VS_HUMAN);
 
         $this->assertFalse($game->isOver());
     }
@@ -251,12 +251,12 @@ class GameTest extends \PHPUnit_Framework_TestCase
 
     public function testGetWinner()
     {
-        $state = [
+        $grid = [
           'O' , null, 'O',
           'X' , 'X' , 'X',
           null, null, null
         ];
-        $game = new Game(new Grid($state), Game::HUMAN_VS_HUMAN);
+        $game = new Game(new Grid($grid), Game::HUMAN_VS_HUMAN);
 
         $this->assertEquals(1, $game->getWinner());
     }

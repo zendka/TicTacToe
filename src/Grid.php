@@ -3,7 +3,8 @@
 /**
  * Class Grid
  *
- * Represents a 3x3 grid containing 'X', 'O' and null.
+ * Represents a 3x3 grid.
+ *
  * Grid's positions are numbered as follows:
  *
  * 0, 1, 2,
@@ -12,7 +13,7 @@
  */
 class Grid
 {
-    const INITIAL_STATE = [
+    const EMPTY_GRID = [
         null, null, null,
         null, null, null,
         null, null, null,
@@ -43,64 +44,67 @@ class Grid
       [2, 5, 8],
     ];
 
-    private $playersPositions = [];
+    private $grid = self::EMPTY_GRID;
 
-    // @todo Validate input
-    public function __construct($state = self::INITIAL_STATE)
+    public function __construct(array $grid = self::EMPTY_GRID)
     {
-        $this->playersPositions[1] = array_keys($state, 'X');
-        $this->playersPositions[2] = array_keys($state, 'O');
-    }
-
-    public function getState()
-    {
-        $state = self::INITIAL_STATE;
-
-        foreach ($this->playersPositions[1] as $position) {
-            $state[$position] = 'X';
+        if (!$this->isValidGrid($grid)) {
+            throw new \InvalidArgumentException('Wrong argument. Sequential array of null, strings and integers expected.');
         }
-        foreach ($this->playersPositions[2] as $position) {
-            $state[$position] = 'O';
+        $this->grid = $grid;
+    }
+
+    private function isValidGrid(array $grid)
+    {
+        foreach ($grid as $value) {
+            if (!empty($value) && !is_string($value) && !is_int($value)) {
+                return false;
+            }
         }
-        return $state;
+        return array_keys($grid) === range(0, 8);
     }
 
-    public function getAvailablePositions()
+    public function getGrid()
     {
-        $occupiedPositions = array_merge($this->playersPositions[1], $this->playersPositions[2]);
-        return array_diff(Grid::POSITIONS, $occupiedPositions);
+        return $this->grid;
     }
 
-    public function getAvailableCentralPosition()
+    public function markPosition($mark, $position)
     {
-        return array_intersect($this->getAvailablePositions(), Grid::CENTER);
+        $this->grid[$position] = $mark;
     }
 
-    public function getAvailableCornerPositions()
+    public function removeMark($position)
     {
-        return array_intersect($this->getAvailablePositions(), Grid::CORNERS);
+        $this->grid[$position] = null;
     }
 
-    public function markPosition($player, $position)
+    public function getEmptyPositions()
     {
-        array_push($this->playersPositions[$player], $position);
+        return array_keys($this->grid, null);
     }
 
-    public function cancelLastMark($player)
+    public function getEmptyCentralPosition()
     {
-        array_pop($this->playersPositions[$player]);
+        return array_intersect($this->getEmptyPositions(), Grid::CENTER);
     }
 
-    public function countPositions($player)
+    public function getEmptyCornerPositions()
     {
-        return count($this->playersPositions[$player]);
+        return array_intersect($this->getEmptyPositions(), Grid::CORNERS);
     }
 
-    public function hasThreeInLine($player) {
+    public function countPositions($mark)
+    {
+        return count(array_keys($this->grid, $mark));
+    }
+
+    public function hasThreeInLine($mark) {
         $lines = array_merge(self::ROWS, self::COLUMNS, self::DIAGONALS);
+        $markPositions = array_keys($this->grid, $mark);
 
         foreach ($lines as $line) {
-            $positionsOnThisLine = array_intersect($this->playersPositions[$player], $line);
+            $positionsOnThisLine = array_intersect($markPositions, $line);
             if (count($positionsOnThisLine) == 3) {
                 return true;
             }

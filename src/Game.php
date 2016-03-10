@@ -2,12 +2,15 @@
 
 class Game
 {
+    static public $PLAYERS_MARKS = [1 => 'X', 2 => 'O'];
+
     const HUMAN_VS_COMPUTER    = 1;
     const COMPUTER_VS_HUMAN    = 2;
     const HUMAN_VS_HUMAN       = 3;
     const COMPUTER_VS_COMPUTER = 4;
 
     private $type = self::HUMAN_VS_COMPUTER;
+    // @todo make private and make it array instead of Grid!! I don't need to know about the representation!!!
     public $grid;
     private $bot;
 
@@ -19,9 +22,9 @@ class Game
         $this->bot = $bot;
     }
 
-    public function getState()
+    public function getGrid()
     {
-        return $this->grid->getState();
+        return $this->grid->getGrid();
     }
 
     public function getType()
@@ -31,7 +34,9 @@ class Game
 
     public function getCurrentPlayer()
     {
-        return $this->grid->countPositions(1) == $this->grid->countPositions(2) ? 1 : 2;
+        return $this->grid->countPositions(self::$PLAYERS_MARKS[1]) ==
+            $this->grid->countPositions(self::$PLAYERS_MARKS[2]) ?
+            1 : 2;
     }
 
     public function getWinner()
@@ -41,12 +46,12 @@ class Game
 
     public function isWinner($player)
     {
-        return $this->grid->hasThreeInLine($player);
+        return $this->grid->hasThreeInLine(self::$PLAYERS_MARKS[$player]);
     }
 
     public function isOver()
     {
-        return $this->getWinner() || empty($this->grid->getAvailablePositions());
+        return $this->getWinner() || empty($this->grid->getEmptyPositions());
     }
 
     private function isComputersTurn()
@@ -67,6 +72,6 @@ class Game
         $bot = new $this->bot($this);
         $bestPosition = $bot->getBestMove($currentPlayer);
 
-        $this->grid->markPosition($currentPlayer, $bestPosition);
+        $this->grid->markPosition(self::$PLAYERS_MARKS[$currentPlayer], $bestPosition);
     }
 }
