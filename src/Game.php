@@ -11,12 +11,11 @@ class Game
     const COMPUTER_VS_HUMAN    = 2;
     const HUMAN_VS_HUMAN       = 3;
     const COMPUTER_VS_COMPUTER = 4;
-
-    static $types = [
+    const TYPES = [
       self::HUMAN_VS_COMPUTER,
       self::COMPUTER_VS_HUMAN,
       self::HUMAN_VS_HUMAN,
-      self::COMPUTER_VS_COMPUTER,
+      self::COMPUTER_VS_COMPUTER
     ];
 
     private $type = self::HUMAN_VS_COMPUTER;
@@ -36,7 +35,7 @@ class Game
 
     private function isTypeValid($type)
     {
-        return in_array($type, self::$types);
+        return in_array($type, self::TYPES);
     }
 
     public function getGrid()
