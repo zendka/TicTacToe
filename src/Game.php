@@ -69,7 +69,7 @@ class Game
 
         $currentPlayer = $this->getCurrentPlayer();
 
-        $bot = new $this->bot($this);
+        $bot = new $this->bot($this->grid, self::$PLAYERS_MARKS);
         $bestPosition = $bot->getBestMove($currentPlayer);
 
         $this->grid->markPosition(self::$PLAYERS_MARKS[$currentPlayer], $bestPosition);
