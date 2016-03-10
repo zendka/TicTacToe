@@ -10,7 +10,7 @@
     <script>
         isComputerVsComputer = "<?php print $isComputerVsComputer; ?>";
         isGameOver = "<?php print $isGameOver; ?>";
-        currentPlayer = "<?php print $currentPlayer; ?>";
+        currentPlayersMark = "<?php print $currentPlayersMark; ?>";
     </script>
     <script src="script.js"></script>
 </head>

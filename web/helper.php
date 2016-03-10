@@ -8,7 +8,7 @@ use Florin\TicTacToe\Grid as Grid;
 function getInput()
 {
     $gameType  = isset($_GET['gameType']) ? $_GET['gameType'] : Game::HUMAN_VS_COMPUTER;
-    $gridState = isset($_GET['gridState']) ? $_GET['gridState'] : Grid::INITIAL_STATE;
+    $gridState = isset($_GET['grid']) ? $_GET['grid'] : Grid::EMPTY_GRID;
     return [$gameType, $gridState];
 }
 
@@ -17,7 +17,7 @@ function displayPage(Game $game)
     // Initialise variables to be used in the template
     $isComputerVsComputer = $game->getType() == Game::COMPUTER_VS_COMPUTER;
     $isGameOver = $game->isOver();
-    $currentPlayer = $game->getCurrentPlayer() == 1 ? 'X' : 'O';
+    $currentPlayersMark = Game::PLAYERS_MARKS[$game->getCurrentPlayer()];
     $winner = $game->getWinner();
     if ($isGameOver) {
         $message = !$winner ?
@@ -32,9 +32,9 @@ function displayGrid(Game $game)
 {
     // Initialise variables to be used in the template
     $gameType = $game->getType();
-    $gridState = $game->getState();
+    $grid = $game->getGrid();
     $available = [];
-    foreach ($gridState as $position => $mark) {
+    foreach ($grid as $position => $mark) {
         $available[$position] = !$mark && !$game->isOver() && $game->getType() != Game::COMPUTER_VS_COMPUTER;
     }
 
