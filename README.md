@@ -7,4 +7,3 @@ PHP 5.6
 
 ## Use
 Point your browser to web/index.php and start playing
-Or see it in action here: [Tic-tac-toe Demo](http://zendka.ro/TicTacToe/web/)
